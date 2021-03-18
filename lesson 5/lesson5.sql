@@ -27,8 +27,8 @@ SET created_at = STR_TO_DATE(created_at,"%e.%c.%Y %k:%i"),
 
 -- меняем тип колонки
 ALTER TABLE users 
-    MODIFY COLUMN created_at DATETIME,
-    MODIFY COLUMN updated_at DATETIME;
+    MODIFY COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    MODIFY COLUMN updated_at DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP;
 
 
 /* Задание # 3.
