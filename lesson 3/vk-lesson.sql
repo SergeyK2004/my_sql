@@ -34,13 +34,13 @@ USE vk;
 
 CREATE TABLE countries (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(56) NOT NULL
+  name VARCHAR(56) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
 CREATE TABLE cities (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(25) NOT NULL,
-  country_id BIGINT UNSIGNED,
+  country_id BIGINT UNSIGNED NOT NULL,
   INDEX fk_cities_to_contries_idx (country_id),
   CONSTRAINT fk_cities_to_contries FOREIGN KEY (country_id) REFERENCES countries (id)  
 ) ENGINE=InnoDB;
@@ -212,7 +212,8 @@ CONSTRAINT fk_users_posts_users FOREIGN KEY (user_id) REFERENCES users (id)
 CREATE TABLE likes_for_posts (
 post_id BIGINT UNSIGNED NOT NULL,
 user_id BIGINT UNSIGNED NOT NULL,
-liked BOOL DEFAULT False,
+liked BOOL NOT NULL DEFAULT True,
+updated_at DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY (post_id, user_id),
 INDEX fk_likes_for_posts_users_idx (user_id),
 INDEX fk_likes_for_posts_posts_idx (post_id),
@@ -226,7 +227,8 @@ CONSTRAINT fk_likes_for_posts_posts FOREIGN KEY (post_id) REFERENCES users_posts
 CREATE TABLE likes_for_media (
 media_id BIGINT UNSIGNED NOT NULL,
 user_id BIGINT UNSIGNED NOT NULL,
-liked BOOL NOT NULL DEFAULT FALSE,
+liked BOOL NOT NULL DEFAULT True,
+updated_at DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY (media_id, user_id),
 INDEX fk_likes_for_media_users_idx (user_id),
 INDEX fk_likes_for_media_media_idx (media_id),
